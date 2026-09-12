@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Shared dependency policy for every firmfooting-owned organisation. Extend it, do not copy it.",
+  "extends": [
+    "config:best-practices",
+    ":dependencyDashboard"
+  ],
+  "semanticCommits": "enabled",
+  "automergeStrategy": "squash",
+  "platformAutomerge": true,
+  "prConcurrentLimit": 5,
+  "labels": ["dependencies"],
+  "minimumReleaseAge": "14 days",
+  "packageRules": [
+    {
+      "description": "Majors soak for a month before they are offered. Longer than the 14 days above on purpose: a major is read by a person, so the wait costs nothing anybody is sitting through.",
+      "matchUpdateTypes": ["major"],
+      "minimumReleaseAge": "30 days"
+    },
+    {
+      "description": "Anything that is not a major merges itself once CI is green. Renovate will not automerge a branch that has no passing checks, so a repository with no tests merges nothing and this fails safe. It does NOT prove a gate exists: only branch protection does that, and most repositories here have none, several because they are private on a plan that does not offer it. Where the gate matters, add required checks to the repository.",
+      "matchUpdateTypes": [
+        "minor", "patch", "digest", "pin", "pinDigest", "bump", "lockFileMaintenance"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "Majors always wait for a person. A major is where an API disappears, a default flips, or a peer range breaks, none of which a green suite reliably catches.",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ]
+}
