@@ -13,6 +13,12 @@
   "minimumReleaseAge": "14 days",
   "packageRules": [
     {
+      "description": "npm waits 14 days like everything else. config:best-practices extends security:minimumReleaseAgeNpm, whose package rule sets npm to 3 days and beats the top-level figure; this rule comes later, so it wins. Only minor and patch are named: the preset deliberately clears the wait for update types that carry no release timestamp (pin, bump, lockFileMaintenance and others), where a wait would hold the update forever. Majors get the 30 days below.",
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "minimumReleaseAge": "14 days"
+    },
+    {
       "description": "Majors soak for a month before they are offered. Longer than the 14 days above on purpose: a major is read by a person, so the wait costs nothing anybody is sitting through.",
       "matchUpdateTypes": ["major"],
       "minimumReleaseAge": "30 days"

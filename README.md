@@ -41,27 +41,47 @@ an explicit `extends` can be traced back by whoever is reading the repository.
 
 | Setting | Value | Why |
 | --- | --- | --- |
-| `extends` | `config:best-practices` | The preset the Renovate maintainers recommend. It builds on `config:recommended` and adds digest pinning for Docker images and GitHub Actions, config migration pull requests, dev-dependency pinning, abandoned-package detection and a three-day wait on npm packages. Current Renovate releases also add weekly lock file maintenance. |
+| `extends` | `config:best-practices` | The preset the Renovate maintainers recommend. It builds on `config:recommended` and adds digest pinning for Docker images and GitHub Actions, config migration pull requests, dev-dependency pinning, abandoned-package detection and a three-day wait on npm packages, which this file raises to 14 days. Current Renovate releases also add weekly lock file maintenance. |
 | `extends` | `:dependencyDashboard` | One issue per repository that lists every pending and held update. It is already part of `config:recommended`. Naming it here keeps it on if that preset changes. |
 | `semanticCommits` | `"enabled"` | Commit messages and pull request titles carry Conventional Commit prefixes. |
 | `automergeStrategy` | `"squash"` | Each automerged update lands as a single commit. |
 | `platformAutomerge` | `true` | Renovate hands the merge to GitHub's own auto-merge, which waits on the repository's required checks. |
 | `prConcurrentLimit` | `5` | At most five Renovate pull requests are open in a repository at once. |
 | `labels` | `["dependencies"]` | Every Renovate pull request is labelled `dependencies`. |
-| `minimumReleaseAge` | `"14 days"` | The figure Renovate documents for automerging third-party dependencies. It gives registries time to pull a malicious release before it merges itself. npm is the exception: see below. |
+| `minimumReleaseAge` | `"14 days"` | The figure Renovate documents for automerging third-party dependencies. It gives registries time to pull a malicious release before it merges itself. |
+| npm `minor` and `patch`: `minimumReleaseAge` | `"14 days"` | Brings npm back in line with everything else. Without this rule npm would wait three days: see below. |
 | Majors: `minimumReleaseAge` | `"30 days"` | A major is where an API disappears or a default flips. A person reads it, so the longer wait costs nobody anything. |
 | Majors: `automerge` | `false` | A major always waits for a person. A green suite does not reliably catch a removed API, a flipped default or a broken peer range. |
 | `minor`, `patch`, `digest`, `pin`, `pinDigest`, `bump`, `lockFileMaintenance`: `automerge` | `true` | These merge themselves once CI is green. |
 
-For npm packages, updates below a major wait three days.
-`config:best-practices` extends `security:minimumReleaseAgeNpm`, which sets
-`minimumReleaseAge` to `"3 days"` in a package rule. A package rule overrides
-a top-level setting, so that rule beats the top-level `"14 days"` here. The
-majors rule in this file comes later, so npm majors still wait 30 days. The
-same Renovate preset also drops the wait for npm `pin` updates, because
-Renovate cannot check a release age for them.
+Every update waits 14 days, npm included. `config:best-practices` extends
+`security:minimumReleaseAgeNpm`, which sets npm's wait to `"3 days"` in a
+package rule, and a package rule overrides a top-level setting. The npm rule
+in this file comes after the preset's, so it wins and puts npm back at 14
+days. It names only `minor` and `patch`: the preset deliberately clears the
+wait for update types that carry no release timestamp, such as `pin`, `bump`
+and `lockFileMaintenance`, because a wait on those would hold them forever.
+Majors, npm included, wait 30 days under the majors rule.
 
 Any held update can be requested early from the Dependency Dashboard.
+
+## Security fixes skip the wait
+
+When a dependency has a known vulnerability, Renovate raises the fix at once:
+no 14-day or 30-day wait, no schedule, and no Dependency Dashboard approval.
+Its commit message and title end in `[SECURITY]`. This is Renovate's default
+`vulnerabilityAlerts` behaviour, which this file keeps. A fix below a major
+then merges itself once CI is green, like any other minor or patch. A fix that
+needs a major still waits for a person.
+
+It applies at every severity, not only critical. Renovate applies these
+settings with `force`, which overrides every package rule, so they cannot be
+limited to one severity.
+
+It needs a source of alerts. On GitHub, Renovate reads the repository's
+Dependabot alerts, so turn Dependabot alerts on under *Settings → Security*
+in each repository. Renovate never sees a vulnerability that GitHub has not
+raised an alert for.
 
 ## The automerge caveat
 
@@ -104,9 +124,9 @@ A mistake reaches every repository the same way. Before merging a change:
   in every repository with green checks, including those with no required
   checks.
 - Remember that `config:best-practices` is not pinned either. When Renovate
-  changes what it includes, every repository picks that up too. The npm wait
-  above is one such effect, so read the Renovate release notes for changes to
-  it.
+  changes what it includes, every repository picks that up too. Its npm wait,
+  overridden above, is one such effect, so read the Renovate release notes for
+  changes to it.
 - Leave local decisions out of this file. A rule that only one repository
   needs belongs in that repository's `renovate.json`.
 
