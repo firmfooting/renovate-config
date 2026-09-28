@@ -1,7 +1,12 @@
+<h1>
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/firmfooting/branding/main/lockups/renovate-config_dark.svg">
-  <img alt="renovate-config, by firmfooting" src="https://raw.githubusercontent.com/firmfooting/branding/main/lockups/renovate-config.svg" height="56">
+  <source media="(prefers-color-scheme: dark)"
+    srcset="https://raw.githubusercontent.com/firmfooting/branding/main/lockups/renovate-config_dark.svg">
+  <img alt="renovate-config, by firmfooting"
+    src="https://raw.githubusercontent.com/firmfooting/branding/main/lockups/renovate-config.svg"
+    height="56">
 </picture>
+</h1>
 
 The shared Renovate dependency policy for every firmfooting-owned organisation.
 
@@ -102,6 +107,20 @@ automerging a particular vendored binary keeps working under a preset that
 automerges non-majors by default. Keep genuinely local decisions local: version
 caps, package groupings, schedules and time zones.
 
+## Checks
+
+| Check | Where it runs |
+| --- | --- |
+| JSON, YAML and merge-conflict hygiene, `renovate-config-validator`, markdownlint, zizmor (offline) | `.pre-commit-config.yaml`, through prek, locally and in the `prek` workflow |
+| zizmor (online) | `zizmor.yml` |
+| Conventional PR title | `pr-title.yml` |
+| LF line endings | `line-endings.yml` |
+
+Every workflow calls the shared definition in
+[firmfooting/.github](https://github.com/firmfooting/.github). GitHub Actions do
+not run on this private repository, so run `uvx prek run --all-files` before
+pushing; it is the same command the `prek` workflow runs.
+
 ## Changing the policy
 
 `github>firmfooting/renovate-config` names no tag, so Renovate reads
@@ -113,10 +132,10 @@ needs a change.
 
 A mistake reaches every repository the same way. Before merging a change:
 
-- Check that `default.json` is valid JSON and passes Renovate's validator:
-  `npx --yes --package renovate -- renovate-config-validator default.json`.
-  A preset that fails to parse stops Renovate in every repository that
-  extends it.
+- Run the checks: `uvx prek run --all-files`. They include
+  `renovate-config-validator` over `default.json`, since a preset that fails
+  to parse stops Renovate in every repository that extends it. Install them
+  as a git hook once with `uvx prek install`.
 - Read `packageRules` in order. Where two rules set the same option for the
   same update, the later one wins. Rules from extended presets come first,
   then the rules in this file, then each repository's own.
@@ -132,4 +151,5 @@ A mistake reaches every repository the same way. Before merging a change:
 
 ---
 
-<sub>Part of <a href="https://github.com/firmfooting">firmfooting</a>: safe, plain tooling for M365 and SharePoint operators.</sub>
+<sub>Part of <a href="https://github.com/firmfooting">firmfooting</a>: safe,
+plain tooling for M365 and SharePoint operators.</sub>
