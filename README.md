@@ -117,9 +117,9 @@ caps, package groupings, schedules and time zones.
 | LF line endings | `line-endings.yml` |
 
 Every workflow calls the shared definition in
-[firmfooting/.github](https://github.com/firmfooting/.github). GitHub Actions do
-not run on this private repository, so run `uvx prek run --all-files` before
-pushing; it is the same command the `prek` workflow runs.
+[firmfooting/.github](https://github.com/firmfooting/.github), on Blacksmith
+runners. Run `uvx prek run --all-files` before pushing; it is the same command
+the `prek` workflow runs.
 
 ## Changing the policy
 
