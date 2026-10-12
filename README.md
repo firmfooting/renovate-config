@@ -58,10 +58,12 @@ an explicit `extends` can be traced back by whoever is reading the repository.
 | Majors: `minimumReleaseAge` | `"30 days"` | A major is where an API disappears or a default flips. A person reads it, so the longer wait costs nobody anything. |
 | Majors: `automerge` | `false` | A major always waits for a person. A green suite does not reliably catch a removed API, a flipped default or a broken peer range. |
 | `minor`, `patch`, `digest`, `pin`, `pinDigest`, `bump`, `lockFileMaintenance`: `automerge` | `true` | These merge themselves once CI is green. |
+| `firmfooting/.github`: `minimumReleaseAge` | `null` | The shared workflows are this organisation's own tags, so a bump is offered, and below a major merged, as soon as CI is green. A wait would hold every repository on the previous workflows for two weeks. |
 
-Every update waits 14 days, npm included. `config:best-practices` extends
-`security:minimumReleaseAgeNpm`, which sets npm's wait to `"3 days"` in a
-package rule, and a package rule overrides a top-level setting. The npm rule
+Every update but `firmfooting/.github` waits 14 days, npm included.
+`config:best-practices` extends `security:minimumReleaseAgeNpm`, which sets
+npm's wait to `"3 days"` in a package rule, and a package rule overrides a
+top-level setting. The npm rule
 in this file comes after the preset's, so it wins and puts npm back at 14
 days. It names only `minor` and `patch`: the preset deliberately clears the
 wait for update types that carry no release timestamp, such as `pin`, `bump`
