@@ -47,7 +47,7 @@
       "automerge": false
     },
     {
-      "description": "firmfooting/.github's shared workflows skip the release-age wait. They are this organisation's own tags, reviewed before they are cut, so the wait guards against nothing, and it would hold every repository on the previous workflows for two weeks: v1.3.0, which moves the shared jobs to the runners private repositories can still use, would have waited 14 days. Comes last so it also beats the majors rule's 30 days; a major still waits for a person.",
+      "description": "firmfooting/.github's shared workflows skip the release-age wait. They are this organisation's own tags, reviewed before they are cut, so the wait guards against nothing, and it would hold every repository on the previous workflows for two weeks. Comes last so it also beats the majors rule's 30 days; a major still waits for a person.",
       "matchPackageNames": ["firmfooting/.github"],
       "minimumReleaseAge": null
     }
