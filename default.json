@@ -19,14 +19,13 @@
       "minimumReleaseAge": "14 days"
     },
     {
-      "description": "The lint tooling moves as one. ruff, pyrefly, prek and markdownlint-cli2 are each pinned in several places (a lock, a pre-commit rev, a workflow variable) and a bump of one without the others leaves the gates disagreeing with each other. One group name gives every repository one pull request, with the same branch name.",
+      "description": "The lint tooling moves as one. ruff, pyrefly, prek and rumdl are each pinned in several places (a lock, a pre-commit rev, a workflow variable) and a bump of one without the others leaves the gates disagreeing with each other. One group name gives every repository one pull request, with the same branch name.",
       "groupName": "lint tooling",
       "matchPackageNames": [
         "ruff", "astral-sh/ruff-pre-commit", "https://github.com/astral-sh/ruff-pre-commit",
         "pyrefly", "facebook/pyrefly",
         "prek", "j178/prek",
-        "markdownlint-cli2", "DavidAnson/markdownlint-cli2",
-        "https://github.com/DavidAnson/markdownlint-cli2"
+        "rumdl", "rvben/rumdl-pre-commit", "https://github.com/rvben/rumdl-pre-commit"
       ]
     },
     {

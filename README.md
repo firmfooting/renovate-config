@@ -113,7 +113,7 @@ caps, package groupings, schedules and time zones.
 
 | Check | Where it runs |
 | --- | --- |
-| JSON, YAML and merge-conflict hygiene, `renovate-config-validator`, markdownlint, zizmor (offline) | `.pre-commit-config.yaml`, through prek, locally and in the `prek` workflow |
+| JSON, YAML and merge-conflict hygiene, `renovate-config-validator`, rumdl (with `--fix`), zizmor (offline) | `.pre-commit-config.yaml`, through prek, locally and in the `prek` workflow |
 | zizmor (online) | `zizmor.yml` |
 | Conventional PR title | `pr-title.yml` |
 | LF line endings | `line-endings.yml` |
