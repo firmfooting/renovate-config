@@ -1,9 +1,9 @@
 <h1>
 <picture>
   <source media="(prefers-color-scheme: dark)"
-    srcset="https://raw.githubusercontent.com/firmfooting/branding/main/lockups/renovate-config_dark.svg">
+    srcset="lockups/renovate-config_dark.svg">
   <img alt="renovate-config, by firmfooting"
-    src="https://raw.githubusercontent.com/firmfooting/branding/main/lockups/renovate-config.svg"
+    src="lockups/renovate-config.svg"
     height="56">
 </picture>
 </h1>
