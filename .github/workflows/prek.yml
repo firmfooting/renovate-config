@@ -15,5 +15,3 @@ jobs:
     permissions:
       contents: read
     uses: firmfooting/.github/.github/workflows/prek.yml@b42e6a19ea7bb68439f4d9a632f16f4fd6ab7338 # v1.6.0
-    with:
-      runner: avrea-ubuntu-24.04-2-vcpu
