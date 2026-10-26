@@ -13,4 +13,6 @@ jobs:
   zizmor:
     permissions:
       contents: read
-    uses: firmfooting/.github/.github/workflows/zizmor.yml@7b967509aeb2c27564751d4afb8ef989a28afbad # v1.2.0
+    uses: firmfooting/.github/.github/workflows/zizmor.yml@b42e6a19ea7bb68439f4d9a632f16f4fd6ab7338 # v1.6.0
+    with:
+      runner: avrea-ubuntu-24.04-2-vcpu
