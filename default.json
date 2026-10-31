@@ -49,6 +49,12 @@
       "description": "This organisation's own releases skip the release-age wait: the shared workflows and every package whose source is a firmfooting repository. They are tags cut and reviewed here, so the wait guards against nothing and would hold every dependent repository on the previous release for two weeks. Matched by source URL so no package is named; a package that publishes no source URL is not matched. Comes last so it also beats the majors rule's 30 days; a major still waits for a person.",
       "matchSourceUrls": ["https://github.com/firmfooting/**"],
       "minimumReleaseAge": null
+    },
+    {
+      "description": "Packages from the organisation's private package feed are its own releases too, so they skip the wait as well; the feed serves no source URL, so the rule above cannot match them. Only the lock moves (update-lockfile): a library keeps its floor, so a new release upstream never forces a release of the library that depends on it, and an exact pin in a consuming root is still replaced.",
+      "matchRegistryUrls": ["https://pkgs.dev.azure.com/firmfooting/**"],
+      "minimumReleaseAge": null,
+      "rangeStrategy": "update-lockfile"
     }
   ]
 }
